@@ -6,6 +6,8 @@ android:
     - platform-tools
     - build-tool-26.0.1
     - android-26
+  licenses:
+      - ".+"
 
 branches:
   only:
