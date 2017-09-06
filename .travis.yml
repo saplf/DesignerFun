@@ -3,8 +3,9 @@ language: android
 android:
   components:
     - tools
-    - platform-tools
     - build-tool-26.0.1
+    - tools
+    - platform-tools
     - android-26
   licenses:
       - ".+"
