@@ -1,4 +1,4 @@
-package top.saplf.dribblefun
+package top.saplf.designerfun
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

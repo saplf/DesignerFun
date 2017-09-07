@@ -1,4 +1,4 @@
-package top.saplf.dribblefun
+package top.saplf.designerfun
 
 import org.junit.Test
 

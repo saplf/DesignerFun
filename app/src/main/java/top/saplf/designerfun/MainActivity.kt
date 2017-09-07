@@ -1,4 +1,4 @@
-package top.saplf.dribblefun
+package top.saplf.designerfun
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
