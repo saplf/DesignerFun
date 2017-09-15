@@ -4,6 +4,18 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+Properties properties = new Properties()
+InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+properties.load(inputStream)
+
+def stringType = 'String'
+def clientSecretName = 'clientSecret'
+def clientSecret = properties.getProperty("client.secret")
+def clientTokenName = 'clientToken'
+def clientToken = properties.getProperty("client.token")
+def clientIdName = 'clientId'
+def clientId = properties.getProperty("client.id")
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -16,6 +28,11 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        all {
+            buildConfigField stringType, clientSecretName, "\"$clientSecret\""
+            buildConfigField stringType, clientTokenName, "\"$clientToken\""
+            buildConfigField stringType, clientIdName, "\"$clientId\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -61,4 +78,15 @@ dependencies {
 
     // smooth animation
     implementation 'at.wirecube:additive_animations:1.3.1'
+
+    // kotlin coroutine
+    def coroutineVersion = '0.18'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }
