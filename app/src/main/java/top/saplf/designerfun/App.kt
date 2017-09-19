@@ -1,13 +1,14 @@
 package top.saplf.designerfun
 
 import android.app.Application
+import android.support.annotation.Keep
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 
 /**
  * @author saplf
  */
-class App : Application() {
+@Keep class App : Application() {
 
   companion object {
     val appContext: App by lazy { tmpApp }

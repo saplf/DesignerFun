@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'me.ele.mess'
 
 Properties properties = new Properties()
 InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
@@ -10,11 +9,16 @@ properties.load(inputStream)
 
 def stringType = 'String'
 def clientSecretName = 'clientSecret'
-def clientSecret = properties.getProperty("client.secret")
+def clientSecret = properties.getProperty('client.secret')
 def clientTokenName = 'clientToken'
-def clientToken = properties.getProperty("client.token")
+def clientToken = properties.getProperty('client.token')
 def clientIdName = 'clientId'
-def clientId = properties.getProperty("client.id")
+def clientId = properties.getProperty('client.id')
+
+def signFile = properties.getProperty('key.file')
+def signAlias = properties.getProperty('key.alias')
+def signPassword = properties.getProperty('key.password')
+def signAliasPassword = properties.getProperty('key.alias.password')
 
 android {
     compileSdkVersion 26
@@ -25,30 +29,62 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+            }
+        }
     }
+
+    signingConfigs {
+        appSignConfig {
+            storeFile file(signFile)
+            storePassword signPassword
+            keyAlias signAlias
+            keyPassword signAliasPassword
+        }
+    }
+
     buildTypes {
         all {
             buildConfigField stringType, clientSecretName, "\"$clientSecret\""
             buildConfigField stringType, clientTokenName, "\"$clientToken\""
             buildConfigField stringType, clientIdName, "\"$clientId\""
+            signingConfig signingConfigs.appSignConfig
         }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            //proguardFile getDefaultProguardFile('proguard-android.txt')
+            proguardFile 'proguard-common.pro'
+            proguardFile 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+//            proguardFile 'proguard-common.pro'
+            proguardFile 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path 'CMakeLists.txt'
         }
     }
 }
 
 dependencies {
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation ('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     def supportVersion = '26.0.0-beta1'
+    implementation "com.android.support:recyclerview-v7:$supportVersion"
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation "com.android.support:design:$supportVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -89,4 +125,10 @@ kotlin {
     experimental {
         coroutines "enable"
     }
+}
+
+mess {
+//    ignoreProguard 'com.jakewharton:butterknife'
+    ignoreProguard 'com.android.support:appcompat-v7'
+    ignoreProguard 'com.android.support:recyclerview-v7'
 }

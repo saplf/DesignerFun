@@ -20,11 +20,18 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# kotlin
+-dontwarn kotlin.**
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics {
+    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
+}
+
 # RxJava/RxKotlin
 
 # retrofit
 -dontwarn okio.**
 -dontwarn javax.annotation.**
+-dontwarn retrofit2.**
 
 # moshi
 -dontwarn okio.**
@@ -37,3 +44,10 @@
 -keepclassmembers class kotlin.Metadata {
     public <methods>;
 }
+
+# move all classes to root package
+#-repackageclasses
+
+-keep class * extends android.app.Activity
+
+-keep class android.** { *; }

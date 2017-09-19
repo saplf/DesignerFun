@@ -79,3 +79,6 @@ freeline.py
 freeline/
 freeline_project_description.json
 
+# Release file
+app/release
+
