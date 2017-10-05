@@ -9,6 +9,9 @@ import android.view.ViewGroup
  * @author saplf
  */
 
+inline val View.isVisible
+  get() = visibility == View.VISIBLE
+
 operator fun ViewGroup.get(index: Int): View {
   if (index < 0 || index >= childCount) {
     throw RuntimeException("$index is beyond 0..$childCount, check your code.")

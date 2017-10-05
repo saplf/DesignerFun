@@ -1,1 +1,9 @@
+//def buildFileName = 'build.gradle.kts'
+//
+//rootProject.buildFileName = "$buildFileName"
+//rootProject.children.each {
+//    it.buildFileName = "$buildFileName"
+//    assert it.projectDir.isDirectory()
+//    assert it.buildFile.isFile()
+//}
 include ':app'
