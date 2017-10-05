@@ -61,14 +61,6 @@ android {
       proguardFile 'proguard-common.pro'
       proguardFile 'proguard-rules.pro'
     }
-    debug {
-      minifyEnabled true
-      zipAlignEnabled true
-      shrinkResources true
-      proguardFile getDefaultProguardFile('proguard-android.txt')
-//            proguardFile 'proguard-common.pro'
-      proguardFile 'proguard-rules.pro'
-    }
   }
 
   externalNativeBuild {
@@ -117,7 +109,7 @@ dependencies {
   implementation 'at.wirecube:additive_animations:1.3.1'
 
   // kotlin coroutine
-  def coroutineVersion = '0.18'
+  def coroutineVersion = '0.19'
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
 }
