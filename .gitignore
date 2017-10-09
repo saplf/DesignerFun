@@ -80,5 +80,7 @@ freeline/
 freeline_project_description.json
 
 # Release file
-app/release
+app/release/
+
+*.bak
 

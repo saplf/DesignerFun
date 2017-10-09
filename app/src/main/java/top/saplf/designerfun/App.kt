@@ -4,6 +4,8 @@ import android.app.Application
 import android.support.annotation.Keep
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
+import io.objectbox.android.AndroidObjectBrowser
+import top.saplf.designerfun.thirdparty.boxStore
 
 /**
  * @author saplf
@@ -11,7 +13,7 @@ import com.orhanobut.logger.Logger
 @Keep class App : Application() {
 
   companion object {
-    val appContext: App by lazy { tmpApp }
+    @JvmStatic val appContext: App by lazy { tmpApp }
     private lateinit var tmpApp: App
   }
 
@@ -23,6 +25,8 @@ import com.orhanobut.logger.Logger
     if (BuildConfig.DEBUG) {
       // Init Logger
       Logger.addLogAdapter(AndroidLogAdapter())
+      // ObjectBox relative
+      AndroidObjectBrowser(boxStore).start(appContext)
     }
   }
 }

@@ -25,7 +25,12 @@
 # kotlin
 -dontwarn kotlin.**
 -assumenosideeffects class kotlin.jvm.internal.Intrinsics {
-    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
+  static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
+}
+
+# kotlin coroutines
+-keepclassmembernames class kotlinx.** {
+  volatile <fields>;
 }
 
 # RxJava/RxKotlin
@@ -40,11 +45,11 @@
 -dontwarn javax.annotation.Nullable
 -dontwarn javax.annotation.ParametersAreNonnullByDefault
 -keepclasseswithmembers class * {
-    @com.squareup.moshi.* <methods>;
+  @com.squareup.moshi.* <methods>;
 }
 -keep @com.squareup.moshi.JsonQualifier interface *
 -keepclassmembers class kotlin.Metadata {
-    public <methods>;
+  public <methods>;
 }
 
 # move all classes to root package
@@ -53,3 +58,11 @@
 -keep class * extends android.app.Activity
 
 -keep class android.** { *; }
+
+# Glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.AppGlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}

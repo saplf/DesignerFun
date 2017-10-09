@@ -9,12 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.item_view.view.*
+import top.saplf.designerfun.thirdparty.BoxTest
+import top.saplf.designerfun.thirdparty.boxStore
 
 class MainActivity : AppCompatActivity() {
+
+  private val testBox by lazy { boxStore.boxFor(BoxTest::class.java) }
+  private var counter: Long = 0
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+
+    if (testBox.count() > 0) {
+      counter = testBox.all[0].count
+    }
 
     with(main_list) {
       layoutManager = LinearLayoutManager(this@MainActivity)
@@ -22,7 +31,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     with(swipe_refresh) {
-      setOnRefreshListener { isRefreshing = false }
+      setOnRefreshListener {
+        app_bar_toolbar.title = "Hello ${++counter}"
+        if (testBox.count() == 0L) {
+          testBox.put(BoxTest(count = counter))
+        } else {
+          testBox.put(testBox.all[0].copy(count = counter))
+        }
+        isRefreshing = false
+      }
+    }
+
+    with(app_bar_toolbar) {
+      title = "Hello $counter"
     }
   }
 
