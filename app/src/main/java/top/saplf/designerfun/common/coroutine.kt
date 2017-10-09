@@ -1,5 +1,6 @@
 package top.saplf.designerfun.common
 
+import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.NonCancellable
@@ -19,9 +20,15 @@ val View.contextJob: Job
   get() = (context as? JobHolder)?.job ?: NonCancellable
 
 fun View.onClick(action: suspend (View) -> Unit) {
-  val eventActor = actor<View>(contextJob + UI, capacity = Channel.CONFLATED) {
-    for (event in channel) action(event)
+  val eventActor = actor<View>(UI + contextJob, capacity = Channel.CONFLATED) {
+    for (msg in channel) action(msg)
   }
-
   setOnClickListener { eventActor.offer(it) }
+}
+
+fun SwipeRefreshLayout.onRefresh(action: suspend () -> Unit) {
+  val actor = actor<Unit>(UI + contextJob, capacity = Channel.CONFLATED) {
+    for (msg in channel) action()
+  }
+  setOnRefreshListener { actor.offer(Unit) }
 }

@@ -11,7 +11,7 @@ import top.saplf.designerfun.App
 
 @Entity data class BoxTest(
   @Id var id: Long = 0,
-  val count: Long
+  var count: Long
 )
 
 val boxStore: BoxStore by lazy {

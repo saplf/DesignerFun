@@ -10,7 +10,7 @@ InputStream inputStream = project.rootProject.file('local.properties').newDataIn
 properties.load(inputStream)
 
 def stringType = 'String'
-def clientTokenName = 'clientToken'
+def clientTokenName = 'CLIENT_TOKEN'
 def clientToken = properties.getProperty('client.token')
 
 def signFile = properties.getProperty('key.file')

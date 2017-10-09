@@ -48,7 +48,7 @@ data class Link(
 )
 
 data class Shot(
-  @Json(name = "id") val id: Int = 0,
+  @Json(name = "id") val id: Long = 0,
   @Json(name = "title") val title: String = "",
   @Json(name = "description") val description: String = "",
   @Json(name = "width") val width: Int = 0,
@@ -89,7 +89,7 @@ data class Team(
   @Json(name = "avatar_url") val avatarUrl: String = "",
   @Json(name = "bio") val bio: String = "",
   @Json(name = "location") val location: String = "",
-  @Json(name = "links") val links: Link = Link(),
+  @Json(name = "links") val link: Link = Link(),
   @Json(name = "buckets_count") val bucketCount: Long = 0,
   @Json(name = "comments_received_count") val commentReceivedCount: Long = 0,
   @Json(name = "followers_count") val followerCount: Long = 0,
@@ -132,4 +132,14 @@ data class Project(
   @Json(name = "created_at") val createdAt: String = "",
   @Json(name = "updated_at") val updatedAt: String = "",
   @Json(name = "user") val user: User = User()
+)
+
+data class Attachment(
+  @Json(name = "id") val id: Long = 0,
+  @Json(name = "url") val url: String = "",
+  @Json(name = "thumbnail_url") val thumbnailUrl: String = "",
+  @Json(name = "size") val size: Int = 0,
+  @Json(name = "content_type") val contentType: String = "",
+  @Json(name = "views_count") val viewsCount: Int = 0,
+  @Json(name = "created_at") val createdAt: String = ""
 )
