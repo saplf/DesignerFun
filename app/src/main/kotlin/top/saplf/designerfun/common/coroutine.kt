@@ -7,6 +7,7 @@ import kotlinx.coroutines.experimental.NonCancellable
 import kotlinx.coroutines.experimental.channels.actor
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.channels.Channel
+import java.math.BigDecimal
 
 /**
  * @author saplf
@@ -20,10 +21,10 @@ val View.contextJob: Job
   get() = (context as? JobHolder)?.job ?: NonCancellable
 
 fun View.onClick(action: suspend (View) -> Unit) {
-  val eventActor = actor<View>(UI + contextJob, capacity = Channel.CONFLATED) {
+  val actor = actor<View>(UI + contextJob, capacity = Channel.CONFLATED) {
     for (msg in channel) action(msg)
   }
-  setOnClickListener { eventActor.offer(it) }
+  setOnClickListener { actor.offer(it) }
 }
 
 fun SwipeRefreshLayout.onRefresh(action: suspend () -> Unit) {

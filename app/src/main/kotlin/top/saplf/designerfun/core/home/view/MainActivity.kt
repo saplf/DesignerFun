@@ -18,8 +18,8 @@ class MainActivity : AppBaseActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    main_list.apply(this::listSetup)
-    swipe_refresh.apply(this::swipeRefreshSetup)
+    main_list.apply(::listSetup)
+    swipe_refresh.apply(::swipeRefreshSetup)
   }
 
   private fun listSetup(recyclerView: RecyclerView) = with(recyclerView) {
@@ -27,10 +27,12 @@ class MainActivity : AppBaseActivity() {
     layoutManager = LinearLayoutManager(this@MainActivity)
   }
 
-  private fun swipeRefreshSetup(refresh: SwipeRefreshLayout) = with(refresh) {
-    onRefresh {
-      shotAdapter.loadData()
-      isRefreshing = false
-    }
+  private fun swipeRefreshSetup(layout: SwipeRefreshLayout) = with(layout) {
+    onRefresh { refresh() }
+  }
+
+  private suspend fun refresh() {
+    shotAdapter.loadData()
+    swipe_refresh.isRefreshing = false
   }
 }

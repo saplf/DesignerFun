@@ -5,8 +5,9 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import top.saplf.designerfun.BuildConfig
+import top.saplf.designerfun.thirdparty.gson
 
 /**
  * @author saplf
@@ -23,7 +24,7 @@ object CustomRetrofit {
   private val normalRetrofit by lazy {
     Retrofit.Builder()
       .baseUrl("https://api.dribbble.com/v1/")
-      .addConverterFactory(MoshiConverterFactory.create())
+      .addConverterFactory(GsonConverterFactory.create(gson))
       .client(okhttpClient)
       .build()
   }
