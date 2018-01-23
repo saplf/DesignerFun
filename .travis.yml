@@ -1,15 +1,20 @@
 language: android
+jdk: oraclejdk8
+sudo: false
 
 android:
   components:
     - tools
-    - build-tool-26.0.1
-    - tools
     - platform-tools
+    - build-tool-26.0.1
     - android-26
-  licenses:
-      - ".+"
+    - extra-google-m2repository
+licenses:
+  - ".+"
+
+script:
+  - ./gradlew build
 
 branches:
   only:
-  - master
+    - master
